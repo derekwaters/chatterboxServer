@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>Chatterbox Server Tester</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+	<script>
+		var newChatName,
+			newUserName,
+			newChatChatId,
+			newChatUserId,
+			newChatMessage,
+			getChatId,
+			responseDiv;
+
+		function startItUp ()
+		{
+			newChatName = document.getElementById('newChatName');
+			newUserName = document.getElementById('newUserName');
+			newChatChatId = document.getElementById('newChatChatId');
+			newChatUserId = document.getElementById('newChatUserId');
+			newChatMessage = document.getElementById('newChatMessage');
+			getChatId = document.getElementById('getChatId');
+			responseDiv = document.getElementById('responseDiv');
+
+			document.getElementById('newChatBtn').onclick = function(event) {
+				postChat();
+			}
+			/*
+			document.getElementById('getChatBtn').onclick = function(event) {
+				getChatMessages();
+			}
+			*/
+			setInterval(getChatMessages, 1000);
+		}
+
+		function postChat ()
+		{
+			var chatId = newChatChatId.value;
+			var userId = newChatUserId.value;
+			var message = newChatMessage.value;
+
+			sendAjax('sendMessage.php', {
+				chatId: chatId,
+				postedById: userId,
+				messageText: message
+			}, function(xmlhttp) {
+				if (xmlhttp.status == 200)
+				{
+					getChatMessages();
+				}
+				else
+				{
+					responseDiv.innerHTML = "OOps, Broken!";
+				}
+			});
+		}
+
+		function getChatMessages ()
+		{
+			var chatId = getChatId.value;
+			sendAjax('getAllMessages.php', {
+				chatId: chatId
+			}, function(xmlhttp) {
+				if (xmlhttp.status == 200)
+				{
+					responseData = JSON.parse(xmlhttp.responseText);
+					var tableData = '<table><thead><tr><td>Id</td><td>Message</td><td>Posted</td><td>By</td></tr></thead><tbody>';
+					for (var i = 0; i < responseData.length; i++)
+					{
+						var msg = responseData[i];
+						tableData += '<tr><td>' + msg.id + '</td><td>' + msg.messageText + '</td><td>' + msg.dateTime + '</td><td>' + msg.userId + '</td></tr>';
+					}
+					tableData += '</tbody></table>';
+					responseDiv.innerHTML = tableData;
+				}
+				else
+				{
+					responseDiv.innerHTML = "OOps, Broken!";
+				}
+			});
+		}
+
+		function sendAjax (urlPath, inputData, responseFunction)
+		{
+			var xmlhttp = null;
+			if (window.XMLHttpRequest)
+			{
+				xmlhttp=new XMLHttpRequest();
+			}
+			else
+			{
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			var url = '/chatterbox/' + urlPath;
+
+			var isFirstKey = true;
+			for (var key in inputData)
+			{
+				if (isFirstKey)
+				{
+					url = url + '?';
+					isFirstKey =  false;
+				}
+				else
+				{
+					url = url + '&';
+				}
+				url = url + key + '=' + encodeURIComponent(inputData[key]);
+			}
+
+			xmlhttp.onreadystatechange=function()
+			{
+				if (xmlhttp.readyState==4)
+				{
+					responseFunction(xmlhttp);
+				}
+			}
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+
+	</script>
+  </head>
+  <body onload="startItUp()">
+    <h1>Chatterbox Test Site</h1>
+	<hr>
+	<div>Chat Name: <input type="text" id="newChatName"><button id="addNewChatBtn">Add A Chat!</button></div>
+	<div>User Name: <input type="text" id="newUserName"><button id="addNewUserBtn">Add A User!</button></div>
+	<div>Chat Id: <input type="text" id="newChatChatId"> User Id: <input type="text" id="newChatUserId"> Message: <input type="text" id="newChatMessage"><button id="newChatBtn">Post It!</button></div>
+	<div>Chat Id: <input type="text" id="getChatId"> <!--<button id="getChatBtn">Get All The Messages</button>--></div>
+
+	<div id="responseDiv">---Replies Go Here---</div>
+  </body>
+</html>
