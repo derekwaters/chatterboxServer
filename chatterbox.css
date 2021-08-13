@@ -1,0 +1,51 @@
+body
+{
+	background-color: rgb(3, 3, 75);
+	font-family:Impact, Haettenschweiler, Georgia, 'Times New Roman', Times, serif;
+	padding: 2px;
+}
+
+h1
+{
+	font-size: 64px;
+	font-weight: bold;
+	color: rgb(99, 27, 99);
+	background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+	text-shadow: 3px 3px;
+}
+
+div
+{
+	padding: 5px;
+}
+
+input[type=text]
+{
+	background-color: rgb(12, 20, 184);
+	color: lightgrey;
+	border: black;
+	border-width: 2px;
+	border-style: solid;
+}
+
+button
+{
+	background-color: rgb(14, 74, 216);
+}
+
+table
+{
+	background-color: rgb(99, 27, 99);
+}
+
+thead td
+{
+	background-color: rgb(12, 20, 184);
+	color:rgb(3, 3, 75);
+}
+
+tbody td
+{
+	padding-left: 10px;
+	padding-right: 10px;
+}
