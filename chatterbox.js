@@ -44,14 +44,19 @@ function selectChat (chatId)
 {
 	currentChat = chatId;
 
+	refreshMessages();
+}
+
+function refreshMessages ()
+{
 	sendAjax('getAllMessages.php', {
-		chatId: chatId
+		chatId: currentChat
 	}, function(xmlhttp) {
 		if (xmlhttp.status == 200)
 		{
 			var chatDiv = document.getElementById("chatBody");
 			responseData = JSON.parse(xmlhttp.responseText);
-			var tableData = '<table><thead><tr><td>Id</td><td>Message</td><td>By</td><td>Message</td></tr></thead><tbody>';
+			var tableData = '<table><thead><tr><td>Message</td><td>By</td><td>Time</td></tr></thead><tbody>';
 			for (var i = 0; i < responseData.length; i++)
 			{
 				var msg = responseData[i];
@@ -62,7 +67,7 @@ function selectChat (chatId)
 				var secondsPad = (theRealDate.getSeconds() < 10 ? '0' : '');
 				var timeString = theRealDate.getHours() + ':' + minutesPad + theRealDate.getMinutes() + ':' + secondsPad + theRealDate.getSeconds();
 
-				tableData += '<tr><td>' + msg.id + '</td><td>' + msg.messageText + '</td><td>' + msg.userId + '</td><td>' + theRealDate.toDateString() + ' ' + timeString + '</td></tr>';
+				tableData += '<tr><td>'  + msg.messageText + '</td><td>' + msg.userId + '</td><td>' + theRealDate.toDateString() + ' ' + timeString + '</td></tr>';
 			}
 			tableData += '</tbody></table>';
 			chatDiv.innerHTML = tableData;
