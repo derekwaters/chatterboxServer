@@ -17,6 +17,7 @@ h1
 div
 {
 	padding: 5px;
+	color: white;
 }
 
 input[type=text]
@@ -31,6 +32,7 @@ input[type=text]
 button
 {
 	background-color: rgb(14, 74, 216);
+	color: white;
 }
 
 table
@@ -48,4 +50,32 @@ tbody td
 {
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+
+
+* {
+box-sizing: border-box;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+float: left;
+padding: 10px;
+height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.left {
+width: 25%;
+}
+
+.right {
+width: 75%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+content: "";
+display: table;
+clear: both;
 }

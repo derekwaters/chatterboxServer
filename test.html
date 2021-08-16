@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chatterbox Server Tester</title>
+
+	<link rel="stylesheet" type="text/css" href="chatterbox.css" />
+
+	<script src="chatterboxtest.js"></script>
+  </head>
+  <body onload="startItUp()">
+    <h1>Chatterbox Test Site</h1>
+	<hr>
+	<div>Chat Name: <input type="text" id="newChatName"><button id="addNewChatBtn">Add A Chat!</button></div>
+	<div>User Name: <input type="text" id="newUserName"><button id="addNewUserBtn">Add A User!</button></div>
+	<div>Chat Id: <input type="text" id="newChatChatId"> User Id: <input type="text" id="newChatUserId"> Message: <input type="text" id="newChatMessage"><button id="newChatBtn">Post It!</button></div>
+	<div>Chat Id: <input type="text" id="getChatId"> <!--<button id="getChatBtn">Get All The Messages</button>--></div>
+	<div><button id="GetUsersBtn">Get All The Users</button></div>
+	<div><button id="GetChatsBtn">Get All The Chats</button></div>
+	<div id="infoDiv">---Info Goes Here---</div>
+	<div id="responseDiv">---Replies Go Here---</div>
+  </body>
+</html>
