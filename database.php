@@ -16,6 +16,25 @@
 		const CREATE_TABLE_USER = 'CREATE TABLE user (id INTEGER PRIMARY KEY, name TEXT)';
 		const CREATE_TABLE_MESSAGE = 'CREATE TABLE message (id INTEGER PRIMARY KEY, messageText TEXT, userId INTEGER, dateTime INTEGER, chatId INTEGER)';
 
+		/*-----------------------------------------------*
+		 | Chat Table                                    |
+		 *-----------------------------------------------*
+		 | id       |  name                              |
+		 *-----------------------------------------------*
+
+		 *-----------------------------------------------*
+		 | User Table                                    |
+		 *-----------------------------------------------*
+		 | id       |  name                              |
+		 *-----------------------------------------------*
+
+		 *-----------------------------------------------*
+		 | Message Table                                 |
+		 *-----------------------------------------------*
+		 | id | messageText | userId | chatId            |
+		 *-----------------------------------------------*/
+
+
 		public function __construct ()
 		{
 			$filename = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::SQLITE_FILENAME;

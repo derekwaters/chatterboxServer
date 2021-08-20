@@ -67,8 +67,9 @@ function refreshMessages ()
 				var secondsPad = (theRealDate.getSeconds() < 10 ? '0' : '');
 				var timeString = theRealDate.getHours() + ':' + minutesPad + theRealDate.getMinutes() + ':' + secondsPad + theRealDate.getSeconds();
 
-				tableData += '<tr><td>'  + msg.messageText + '</td><td>' + msg.userId + '</td><td>' + theRealDate.toDateString() + ' ' + timeString + '</td></tr>';
+				tableData += '<tr><td>'  + msg.messageText + '</td><td>' + msg.userName + '</td><td>' + theRealDate.toDateString() + ' ' + timeString + '</td></tr>';
 			}
+
 			tableData += '</tbody></table>';
 			chatDiv.innerHTML = tableData;
 		}

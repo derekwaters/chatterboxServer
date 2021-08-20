@@ -3,7 +3,7 @@
 	require_once('database.php');
 
 	$db = new ChatterboxDatabase();
-	$users = $db->getAllChats();
+	$chats = $db->getAllChats();
 
 	header('Content-type: text/json');
-	echo json_encode($users);
+	echo json_encode($chats);
