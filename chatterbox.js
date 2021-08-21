@@ -54,8 +54,10 @@ function refreshMessages ()
 	}, function(xmlhttp) {
 		if (xmlhttp.status == 200)
 		{
-			var chatDiv = document.getElementById("chatBody");
 			responseData = JSON.parse(xmlhttp.responseText);
+
+
+			var chatDiv = document.getElementById("chatBody");
 			var tableData = '<table><thead><tr><td>Message</td><td>By</td><td>Time</td></tr></thead><tbody>';
 			for (var i = 0; i < responseData.length; i++)
 			{
@@ -71,9 +73,64 @@ function refreshMessages ()
 			}
 
 			tableData += '</tbody></table>';
-			chatDiv.innerHTML = tableData;
+			// chatDiv.innerHTML = tableData;
+
+
+			var chatDiv = document.getElementById("chatPosts");
+
+			html = "";
+
+			var now = new Date();
+
+			var listGroupTemplate = '<a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">' +
+				'<img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">' +
+				'<div class="d-flex gap-2 w-100 justify-content-between">' +
+					'<div>' +
+						'<span class="mb-0 chatUser">{{userName}}</span>' +
+						'<span class="mb-0 opacity-75">{{messageText}}</span>' +
+					'</div>' +
+					'<small class="opacity-50 text-nowrap">{{relativeDate}}</small>' +
+				'</div>' +
+			'</a>';
+
+
+
+
+
+			for (var i = 0; i < responseData.length; i++)
+			{
+				var msg = responseData[i];
+
+				var msgDate = new Date();
+				msgDate.setTime(msg.dateTime * 1000);
+				var daysDiff = dateDiffInDays(msgDate, now);
+				if (daysDiff === 0)
+				{
+					var minutesPad = (msgDate.getMinutes() < 10 ? '0' : '');
+					var secondsPad = (msgDate.getSeconds() < 10 ? '0' : '');
+					msg.relativeDate = msgDate.getHours() + ':' + minutesPad + msgDate.getMinutes() + ':' + secondsPad + theRealDate.getSeconds();
+				}
+				else
+				{
+					msg.relativeDate = daysDiff + 'd';
+				}
+
+				html += mustache.render(listGroupTemplate, msg);
+			}
+			chatDiv.innerHTML = html;
 		}
 	});
+}
+
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+// a and b are javascript Date objects
+function dateDiffInDays(a, b) {
+	// Discard the time and time-zone information.
+	const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+	const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+	return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
 function sendAjax (urlPath, inputData, responseFunction)
