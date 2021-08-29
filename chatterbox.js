@@ -76,10 +76,6 @@ function refreshMessages ()
 			// chatDiv.innerHTML = tableData;
 
 
-			var chatDiv = document.getElementById("chatPosts");
-
-			html = "";
-
 			var now = new Date();
 
 			var listGroupTemplate = '<a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">' +
@@ -93,10 +89,8 @@ function refreshMessages ()
 				'</div>' +
 			'</a>';
 
-
-
-
-
+			var chatPosts = $('#chatPosts');
+			chatPosts.empty();
 			for (var i = 0; i < responseData.length; i++)
 			{
 				var msg = responseData[i];
@@ -115,9 +109,12 @@ function refreshMessages ()
 					msg.relativeDate = daysDiff + 'd';
 				}
 
-				html += mustache.render(listGroupTemplate, msg);
+				html = mustache.render(listGroupTemplate, msg);
+				//var newStuff = $(html);
+				//chatPosts.append(html);
+				//html.appendTo('.chatPosts');
+				$(html).hide().appendTo('#chatPosts').slideDown();
 			}
-			chatDiv.innerHTML = html;
 		}
 	});
 }
